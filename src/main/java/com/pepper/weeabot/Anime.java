@@ -10,22 +10,27 @@ public class Anime {
   @GeneratedValue
   private Long id;
   private String title;
-  private int rating;
+  private Float rating;
+  private int ratingCount; 
 
   public Anime() {}
 
-  public Anime(String title, int rating) {
+  public Anime(String title, Float rating) {
     this.title = title;
     this.rating = rating;
   }
 
   public Anime(String title) {
-    this(title, 0);
+    this(title, 0F);
+  }
+
+  private Float weightedAverageByCount(int x) {
+    return ((this.rating * (this.ratingCount - 1)) + x) / this.ratingCount;
   }
 
   @Override
   public String toString() {
-    return String.format("Anime{id=%d, title='%s', rating=%d}", id, title, rating);
+    return String.format("Anime{id=%d, title='%s', rating=%f, ratingCount=%d}", id, title, rating, ratingCount);
   }
 
   public Long getId() {
@@ -40,11 +45,22 @@ public class Anime {
     this.title = title;
   }
 
-  public int getRating() {
+  public int getRatingCount() {
+    return ratingCount;
+  }
+
+  public Float getRating() {
     return rating;
   }
 
   public void setRating(int rating) {
-    this.rating = rating > 0 && rating < 5 ? rating : this.rating;
+    this.rating = (float)rating;
+  }
+
+  public void updateRating(int newRating) {
+    if (newRating > 0 && newRating <= 5) {
+      this.ratingCount++;
+      this.rating = weightedAverageByCount(newRating);
+    }
   }
 }

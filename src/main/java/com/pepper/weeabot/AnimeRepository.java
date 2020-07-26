@@ -1,7 +1,7 @@
 package com.pepper.weeabot;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AnimeRepository extends CrudRepository<Anime, Long> {
+public interface AnimeRepository extends JpaRepository<Anime, Long> {
 
 }
