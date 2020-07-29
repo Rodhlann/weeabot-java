@@ -15,6 +15,9 @@ public class DatabaseLoader implements CommandLineRunner {
 
   @Override
   public void run(String... strings) throws Exception {
-    this.repository.save(new Anime("Attack on Titan"));
+    int animeCount = repository.findAll().size();
+    if (animeCount == 0) {
+      this.repository.save(new Anime("attack on titan", 4F));
+    }
   }
 }
