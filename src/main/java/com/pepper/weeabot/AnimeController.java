@@ -1,13 +1,15 @@
 package com.pepper.weeabot;
 
 import java.util.List;
-import java.util.Optional;
+
+import com.pepper.weeabot.utils.SlackRequestMapper;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javassist.tools.web.BadHttpRequest;
 
 @RestController
 public class AnimeController {
@@ -17,29 +19,14 @@ public class AnimeController {
     this.repository = repository;
   }
 
-  @GetMapping("animes")
+  @GetMapping("weeabot")
   List<Anime> getAnime() {
     return repository.findAll();
   }
 
-  @GetMapping("animes/{id}")
-  Optional<Anime> getAnime(@PathVariable Long id) {
-    try {
-      // TODO: Throw when null
-      return repository.findById(id);
-    } catch (Exception e) {
-      throw e;
-    }
-  }
-
-  @PatchMapping("animes/{id}")
-  Anime updateAnime(@PathVariable Long id, @RequestBody Anime updatedAnime) {
-    return repository.findById(id).map(anime -> {
-      anime.setTitle(updatedAnime.getTitle());
-      anime.updateRating((int)updatedAnime.getRating().floatValue());
-      return repository.save(anime);
-    }).orElseGet(() -> {
-      return repository.save(updatedAnime);
-    });
+  @PostMapping("weeabot")
+  void handleSlackRequest(@RequestParam String text) throws BadHttpRequest {
+    Anime newAnime = SlackRequestMapper.mapRequest(text);
+    repository.save(newAnime);
   }
 } 

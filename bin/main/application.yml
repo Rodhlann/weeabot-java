@@ -1,0 +1,12 @@
+spring:
+  data:
+    rest:
+      base-path: "/weeabot"
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/weeabot-db"
+    username: rodhlann
+    password: I<3Anime

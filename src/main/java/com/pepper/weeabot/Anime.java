@@ -11,14 +11,14 @@ public class Anime {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
   private String title;
-  private Float rating;
+  private Float rating = 0F;
   private int ratingCount; 
 
   public Anime() {}
 
   public Anime(String title, Float rating) {
     this.title = title;
-    this.rating = rating;
+    this.updateRating(rating.intValue());
   }
 
   public Anime(String title) {
