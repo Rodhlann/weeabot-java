@@ -1,4 +1,4 @@
-package com.pepper.weeabot;
+package com.pepper.weeabot.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

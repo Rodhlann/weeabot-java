@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.pepper.weeabot.models.Anime;
+import com.pepper.weeabot.models.SlackRequest;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -27,8 +30,9 @@ public class AnimeControllerTests {
     float rating = 5;
 
     String requestString = String.format("add %s %f", title, rating);
+    SlackRequest request = new SlackRequest(null, null, null, null, null, null, null, null, requestString, null);
 
-    subject.handleSlackRequest(requestString);
+    subject.handleSlackRequest(request);
 
     verify(repository, times(1)).save(captor.capture());
     assertEquals(title, captor.getValue().getTitle());

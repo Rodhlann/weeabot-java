@@ -2,7 +2,7 @@ package com.pepper.weeabot.utils;
 
 import java.util.List;
 
-import com.pepper.weeabot.Anime;
+import com.pepper.weeabot.models.Anime;
 
 import javassist.tools.web.BadHttpRequest;
 

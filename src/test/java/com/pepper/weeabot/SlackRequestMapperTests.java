@@ -2,6 +2,7 @@ package com.pepper.weeabot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.pepper.weeabot.models.Anime;
 import com.pepper.weeabot.utils.SlackRequestMapper;
 
 import org.junit.jupiter.api.Test;

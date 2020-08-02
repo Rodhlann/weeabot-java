@@ -2,6 +2,8 @@ package com.pepper.weeabot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.pepper.weeabot.models.Anime;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
