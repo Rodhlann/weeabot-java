@@ -1,7 +1,4 @@
 spring:
-  data:
-    rest:
-      base-path: "/weeabot"
   jpa:
     hibernate:
       ddl-auto: validate
