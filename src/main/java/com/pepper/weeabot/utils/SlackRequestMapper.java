@@ -8,6 +8,7 @@ import javassist.tools.web.BadHttpRequest;
 
 public class SlackRequestMapper {
 
+  // TODO: Update this to expect potentially no rating
   private static Anime parseAddRequest(List<String> requestArgs) {
     String title = String.join(" ", requestArgs.subList(1, requestArgs.size() - 1));
     float rating = Float.parseFloat(requestArgs.get(requestArgs.size() - 1));
