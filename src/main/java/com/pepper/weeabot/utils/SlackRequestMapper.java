@@ -7,22 +7,39 @@ import com.pepper.weeabot.models.Anime;
 import javassist.tools.web.BadHttpRequest;
 
 public class SlackRequestMapper {
-
-  // TODO: Update this to expect potentially no rating
-  private static Anime parseAddRequest(List<String> requestArgs) {
-    String title = String.join(" ", requestArgs.subList(1, requestArgs.size() - 1));
-    float rating = Float.parseFloat(requestArgs.get(requestArgs.size() - 1));
+  public static String emptyListResponse = "No anime here! Be the first to add one!";
+  
+  public static String parseListRequest(List<Anime> animeList) {
+    StringBuilder animeListOutput = new StringBuilder();
+    for(int i = 0; i < animeList.size(); i++) {
+      animeListOutput.append(i + 1 + ". " + animeList.get(i).getTitle() + '\n');
+    }
+    String output = animeListOutput.toString().trim();
+    return output.isEmpty() ? emptyListResponse : output;
+  }
+  
+  public static Anime parseAddRequest(List<String> requestArgs) throws BadHttpRequest {
+    float rating = getRatingFromRequestArgs(requestArgs);
+    String title = getTitleFromRequestArgs(requestArgs);
     return new Anime(title, rating);
+  } 
+
+  private static String getTitleFromRequestArgs(List<String> requestArgs) throws BadHttpRequest{
+    String title = String.join(" ", requestArgs.subList(0, requestArgs.size())).strip();
+    if (title.isEmpty()) {
+      throw new BadHttpRequest();
+    } 
+    return title;
   }
 
-  public static Anime mapRequest(String requestString) throws BadHttpRequest {
-
-    List<String> requestArgs = List.of(requestString.split("\\s+"));
-
-    if (requestArgs.contains("add")) {
-      return parseAddRequest(requestArgs);
+  private static Float getRatingFromRequestArgs(List<String> requestArgs) {
+    int ratingIndex = requestArgs.size() - 1;
+    try {
+      Float rating = Float.valueOf(requestArgs.get(ratingIndex));
+      requestArgs.remove(ratingIndex);
+      return rating;
+    } catch (NumberFormatException e) {
+      return 0F;
     }
-
-    throw new BadHttpRequest();
-  } 
+  }
 }

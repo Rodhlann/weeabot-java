@@ -64,4 +64,8 @@ public class Anime {
       this.rating = weightedAverageByCount(newRating);
     }
   }
+
+  public String getTitleAndRating() {
+    return String.format("%s %f", getTitle(), getRating());
+  }
 }
