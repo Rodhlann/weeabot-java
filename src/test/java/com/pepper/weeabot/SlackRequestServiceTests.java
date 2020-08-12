@@ -76,24 +76,7 @@ public class SlackRequestServiceTests {
   }
 
   @Test
-  void testHandleSlackRequestData_Add_FullEntity() throws BadHttpRequest {
-    final String title = "Fullmetal Alchemist";
-    final float rating = 5;
-
-    final String requestString = String.format("add %s %f", title, rating);
-    final SlackRequest request = new SlackRequest();
-    request.setText(requestString);
-
-    subject.handleSlackRequestData(request);
-
-    verify(repository).save(captor.capture());
-    assertEquals(title, captor.getValue().getTitle());
-    assertEquals(rating, (float) captor.getValue().getRating());
-    assertEquals(1, captor.getValue().getRatingCount());
-  }
-
-  @Test
-  void testHandleSlackRequestData_Add_NameOnly() throws BadHttpRequest {
+  void testHandleSlackRequestData_Add() throws BadHttpRequest {
     final String title = "Fullmetal Alchemist";
 
     final String requestString = String.format("add %s", title);
@@ -104,19 +87,7 @@ public class SlackRequestServiceTests {
 
     verify(repository).save(captor.capture());
     assertEquals(title, captor.getValue().getTitle());
-    assertEquals(0, (float) captor.getValue().getRating());
     assertEquals(0, captor.getValue().getRatingCount());
-  }
-
-  @Test
-  void testHandleSlackRequestData_Add_RatingOnly() throws BadHttpRequest {
-    final Float rating = 3F;
-
-    final String requestString = String.format("add %f", rating);
-    final SlackRequest request = new SlackRequest();
-    request.setText(requestString);
-
-    assertThrows(BadHttpRequest.class, () -> subject.handleSlackRequestData(request));
   }
 
   @Test

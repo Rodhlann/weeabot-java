@@ -54,16 +54,15 @@ public class SlackRequestService {
       throw new BadHttpRequest();
     }
 
-    float rating = getRatingFromRequestArgs(requestArgs);
     String title = getTitleFromRequestArgs(requestArgs);
-    repository.save(new Anime(title, rating));
+    repository.save(new Anime(title));
   }
 
   private void deleteAnime(List<String> requestArgs) throws BadHttpRequest {
     if (requestArgs.isEmpty()) { 
       throw new BadHttpRequest();
     }
-    
+
     String title = String.join(" ", requestArgs);
     try {
       Anime animeToDelete = repository.findByTitle(title).get();
@@ -83,21 +82,6 @@ public class SlackRequestService {
   }
 
   private String getTitleFromRequestArgs(List<String> requestArgs) throws BadHttpRequest {
-    String title = String.join(" ", requestArgs.subList(0, requestArgs.size())).strip();
-    if (title.isEmpty()) {
-      throw new BadHttpRequest();
-    }
-    return title;
-  }
-
-  private Float getRatingFromRequestArgs(List<String> requestArgs) {
-    int ratingIndex = requestArgs.size() - 1;
-    try {
-      Float rating = Float.valueOf(requestArgs.get(ratingIndex));
-      requestArgs.remove(ratingIndex);
-      return rating;
-    } catch (NumberFormatException e) {
-      return 0F;
-    }
+    return String.join(" ", requestArgs.subList(0, requestArgs.size())).strip();
   }
 }
