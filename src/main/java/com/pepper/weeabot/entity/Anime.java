@@ -1,4 +1,4 @@
-package com.pepper.weeabot.models;
+package com.pepper.weeabot.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,7 +59,7 @@ public class Anime {
   }
 
   public void updateRating(int newRating) {
-    if (newRating > 0 && newRating <= 5) {
+    if (newRating > 0 && newRating <= 10) {
       this.ratingCount++;
       this.rating = weightedAverageByCount(newRating);
     }

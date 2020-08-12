@@ -2,7 +2,7 @@ package com.pepper.weeabot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.pepper.weeabot.models.Anime;
+import com.pepper.weeabot.entity.Anime;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,12 +10,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class AnimeTests {
-  
+
   @Test
   void canUpdateRating() {
     Anime anime = new Anime("Attack on Titan");
 
-    anime.updateRating(2); 
+    anime.updateRating(2);
     anime.updateRating(5);
     anime.updateRating(5);
     anime.updateRating(1);

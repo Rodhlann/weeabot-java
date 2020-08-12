@@ -1,6 +1,7 @@
 package com.pepper.weeabot;
 
-import com.pepper.weeabot.models.Anime;
+import com.pepper.weeabot.entity.Anime;
+import com.pepper.weeabot.repository.AnimeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

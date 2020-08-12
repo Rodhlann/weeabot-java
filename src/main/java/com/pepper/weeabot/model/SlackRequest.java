@@ -1,4 +1,4 @@
-package com.pepper.weeabot.models;
+package com.pepper.weeabot.model;
 
 public class SlackRequest {
   String token;
@@ -11,6 +11,8 @@ public class SlackRequest {
   String command;
   String text;
   String response_url;
+
+public SlackRequest() {}
 
 public SlackRequest(String token, String team_id, String team_domain, String channel_id, String channel_name,
       String user_id, String user_name, String command, String text, String response_url) {
