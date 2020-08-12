@@ -86,7 +86,7 @@ public class SlackRequestServiceTests {
     subject.handleSlackRequestData(request);
 
     verify(repository).save(captor.capture());
-    assertEquals(title, captor.getValue().getTitle());
+    assertEquals(title.toLowerCase(), captor.getValue().getTitle());
     assertEquals(0, captor.getValue().getRatingCount());
   }
 
@@ -109,9 +109,9 @@ public class SlackRequestServiceTests {
     final SlackRequest request = new SlackRequest();
     request.setText(requestString);
 
-    final Optional<Anime> animeToDelete = Optional.of(new Anime(title));
+    final Optional<Anime> animeToDelete = Optional.of(new Anime(title.toLowerCase()));
 
-    when(repository.findByTitle(title)).thenReturn(animeToDelete);
+    when(repository.findByTitle(title.toLowerCase())).thenReturn(animeToDelete);
 
     subject.handleSlackRequestData(request);
 

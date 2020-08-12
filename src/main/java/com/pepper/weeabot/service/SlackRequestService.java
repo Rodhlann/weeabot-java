@@ -25,7 +25,12 @@ public class SlackRequestService {
   }
 
   public void handleSlackRequestData(SlackRequest data) throws BadHttpRequest {
-    List<String> requestArgs = new ArrayList<String>(List.of(data.getText().split("\\s+")));
+    List<String> requestArgs = new ArrayList<String>(
+      List.of(data.getText()
+        .toLowerCase()
+        .split("\\s+")
+      )
+    );
     
     switch (requestArgs.remove(0)) {
       case "list":
