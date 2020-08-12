@@ -2,6 +2,7 @@ package com.pepper.weeabot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -83,11 +84,26 @@ public class SlackRequestServiceTests {
     final SlackRequest request = new SlackRequest();
     request.setText(requestString);
 
+    when(repository.findByTitle(title.toLowerCase())).thenReturn(Optional.empty());
+
     subject.handleSlackRequestData(request);
 
     verify(repository).save(captor.capture());
     assertEquals(title.toLowerCase(), captor.getValue().getTitle());
     assertEquals(0, captor.getValue().getRatingCount());
+  }
+
+  @Test
+  void testHandleSlackRequestData_Add_AnimeAlreadyExists() throws BadHttpRequest {
+    final String title = "Fullmetal Alchemist";
+
+    final String requestString = String.format("add %s", title);
+    final SlackRequest request = new SlackRequest();
+    request.setText(requestString);
+
+    when(repository.findByTitle(title.toLowerCase())).thenReturn(Optional.of(new Anime(title)));
+
+    assertThrows(BadHttpRequest.class, () -> subject.handleSlackRequestData(request));
   }
 
   @Test

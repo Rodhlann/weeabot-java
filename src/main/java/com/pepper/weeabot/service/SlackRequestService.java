@@ -2,6 +2,7 @@ package com.pepper.weeabot.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.pepper.weeabot.entity.Anime;
 import com.pepper.weeabot.model.SlackRequest;
@@ -60,6 +61,9 @@ public class SlackRequestService {
     }
 
     String title = getTitleFromRequestArgs(requestArgs);
+
+    throwErrorIfAnimeExists(title);
+
     repository.save(new Anime(title));
   }
 
@@ -88,5 +92,12 @@ public class SlackRequestService {
 
   private String getTitleFromRequestArgs(List<String> requestArgs) throws BadHttpRequest {
     return String.join(" ", requestArgs.subList(0, requestArgs.size())).strip();
+  }
+
+  private void throwErrorIfAnimeExists(String title) throws BadHttpRequest {
+    Optional<Anime> anime = repository.findByTitle(title);
+    if(anime.isPresent()) {
+      throw new BadHttpRequest();
+    }
   }
 }
