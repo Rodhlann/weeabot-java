@@ -18,7 +18,7 @@ public class AnimeController {
     this.service = service;
   }
 
-  @PostMapping("weeabot")
+  @PostMapping("/")
   public void handleSlackRequest(@RequestBody SlackRequest data) throws BadHttpRequest {
     service.handleSlackRequestData(data);
   }
